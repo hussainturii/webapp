@@ -22,6 +22,7 @@ $result = $conn->query("SELECT * FROM students ORDER BY id DESC");
 <head><title>Student Records</title></head>
 <body>
 <h2>Student Records</h2>
+<p>Hussain &middot; SP23-BAI-057 &middot; CSC418 DevOps Assignment 2</p>
 <form method="POST">
     <input type="text" name="name" placeholder="Enter student name" required>
     <button type="submit">Add</button>
