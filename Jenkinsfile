@@ -66,7 +66,15 @@ pipeline {
     post {
         always {
             script {
-                def recipient = env.PUSHER_EMAIL?.trim()
+                // GitHub may hide a pusher's real email behind a noreply address.
+                // Resolve known collaborators by their GitHub login first.
+                def collaboratorEmails = [
+                    'hussainturii': 'h0essainr@gmail.com'
+                ]
+                def recipient = collaboratorEmails[env.PUSHER_LOGIN?.toLowerCase()] ?: env.PUSHER_EMAIL?.trim()
+                if (recipient?.toLowerCase()?.endsWith('@users.noreply.github.com')) {
+                    error('The pusher has a private GitHub email. Add their login and delivery address to collaboratorEmails.')
+                }
                 if (recipient && recipient ==~ /[A-Za-z0-9.!#$%&'*+\/=?^_`{|}~-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)+/) {
                     emailext(
                         to: recipient,
