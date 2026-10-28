@@ -1,0 +1,6 @@
+.git
+Jenkinsfile
+*.yml
+README.md
+.env
+*.pem

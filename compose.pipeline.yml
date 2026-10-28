@@ -1,0 +1,32 @@
+name: webapp-ci
+services:
+  web:
+    image: hussainturii/webapp:latest
+    container_name: webapp-ci-web
+    ports:
+      - "8082:80"
+    volumes:
+      - ./src:/var/www/html:ro
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: "no"
+  db:
+    image: mariadb:10.6
+    container_name: webapp-ci-db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: studentsdb
+    ports:
+      - "3308:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./src/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+    restart: "no"
+volumes:
+  db_data:
