@@ -22,7 +22,7 @@ For a fresh machine, create the named volume first: `docker volume create webapp
 
 `compose.pipeline.yml` mounts `./src` into the PHP container instead of building a new application image. It uses port 8082, database port 3308, distinct container names, and its own database volume.
 
-The Jenkins pipeline checks out the pushed revision, validates PHP inside Docker, starts the deployment, checks its HTTP response, and emails the build result to `pusher.email` from the GitHub push payload. A setup build without a push event sends no email.
+The Jenkins pipeline checks out the pushed revision, validates PHP inside Docker, starts the deployment, checks its HTTP response, and emails the build result to the pusher. Known GitHub logins are mapped to delivery addresses because GitHub may send a private noreply address in `pusher.email`: `hussainturii` maps to the student's sender account, and `malik-qasim` maps to the instructor's email. Other pushers use their deliverable payload email. A setup build without a push event sends no email.
 
 Required Jenkins plugins: Git, Pipeline, Docker Pipeline, Email Extension, and Generic Webhook Trigger.
 

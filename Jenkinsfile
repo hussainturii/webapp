@@ -69,7 +69,8 @@ pipeline {
                 // GitHub may hide a pusher's real email behind a noreply address.
                 // Resolve known collaborators by their GitHub login first.
                 def collaboratorEmails = [
-                    'hussainturii': 'h0essainr@gmail.com'
+                    'hussainturii': 'h0essainr@gmail.com',
+                    'malik-qasim': 'qasimalik@gmail.com'
                 ]
                 def recipient = collaboratorEmails[env.PUSHER_LOGIN?.toLowerCase()] ?: env.PUSHER_EMAIL?.trim()
                 if (recipient?.toLowerCase()?.endsWith('@users.noreply.github.com')) {
